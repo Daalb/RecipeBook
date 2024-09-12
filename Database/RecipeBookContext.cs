@@ -14,10 +14,10 @@ namespace Database
         {
         }
 
-        public DbSet<Step> Steps { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Recipe> Recipes { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<Recipe> Recipes { get; set; }
+        public DbSet<Step> Steps { get; set; }
         public DbSet<RecipeIngredient> RecipesIngredients { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -27,24 +27,15 @@ namespace Database
             modelBuilder.Entity<RecipeIngredient>()
                 .HasKey(ri => new { ri.Id, ri.IngredientId, ri.RecipeId });
 
-            //modelBuilder.Entity<Recipe>()
-            //    .HasMany(r => r.Ingredients)
-            //    .WithMany(i => i.Recipes)
-            //    .UsingEntity("RecipeIngredient",
-            //        l => l.HasOne(typeof(Ingredient)).WithMany().OnDelete(DeleteBehavior.Restrict),
-            //        r => r.HasOne(typeof(Recipe)).WithMany().OnDelete(DeleteBehavior.Restrict)
-            //    );
-            modelBuilder.Entity<RecipeIngredient>()
-                .HasOne(ri => ri.Recipe)
-                .WithMany(r => r.RecipeIngredients)
-                .HasForeignKey(ri => ri.RecipeId)
-                .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<RecipeIngredient>()
-                .HasOne(ri => ri.Ingredient)
-                .WithMany(i => i.RecipeIngredients)
-                .HasForeignKey(ri => ri.IngredientId)
-                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Ingredient>()
+                .HasMany(i => i.Recipes)
+                .WithMany(r => r.Ingredients)
+                .UsingEntity<RecipeIngredient>(
+                    r => r.HasOne<Recipe>().WithMany().OnDelete(DeleteBehavior.NoAction),
+                    l => l.HasOne<Ingredient>().WithMany().OnDelete(DeleteBehavior.NoAction)
+                );
         }
     }
 }

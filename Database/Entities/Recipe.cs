@@ -25,7 +25,6 @@ namespace Database.Entities
         public virtual Category Category { get; set; } = null!;
         public virtual List<Step> Steps { get; } = [];
         public virtual List<Ingredient> Ingredients { get; } = [];
-        public virtual List<RecipeIngredient> RecipeIngredients { get; } = [];
 
     }
 }

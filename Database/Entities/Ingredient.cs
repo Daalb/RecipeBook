@@ -20,6 +20,5 @@ namespace Database.Entities
         //Navigation
         public virtual Category Category { get; set; } = new Category();
         public virtual List<Recipe> Recipes { get; } = [];
-        public virtual List<RecipeIngredient> RecipeIngredients { get; } = [];
     }
 }
