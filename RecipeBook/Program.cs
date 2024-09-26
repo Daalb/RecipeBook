@@ -1,4 +1,5 @@
 using Database;
+using Database.Entities;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,8 @@ builder.Services.AddControllersWithViews();
 //Db Connection
 var connectionString = builder.Configuration.GetConnectionString("recipeDb");
 builder.Services.AddDbContext<RecipeBookContext>(options => options.UseSqlServer(connectionString));
+
+builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<RecipeBookContext>();//What does it mean this?
 
 var app = builder.Build();
 

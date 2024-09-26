@@ -1,9 +1,10 @@
 ﻿using Database.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Database
 {
-	public class RecipeBookContext : DbContext
+	public class RecipeBookContext : IdentityDbContext<User>
 	{
 		public RecipeBookContext(DbContextOptions<RecipeBookContext> options) : base(options)
 		{
